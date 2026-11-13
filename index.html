@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book &#xb7; MSK Studios</title>
+<meta name="description" content="Book bridal, wedding and event hair &amp; makeup with MSK Studios, Nottingham. See live availability and book online.">
+<meta property="og:title" content="Book with MSK Studios">
+<meta property="og:description" content="Bridal, wedding &amp; event hair and makeup in Nottingham. See live availability and book online.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FBF9F6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500&family=Jost:wght@200;300;400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF9F6;
+    --card: #FFFFFF;
+    --ink: #2E2A26;
+    --muted: #8A837B;
+    --line: #DAD4CC;
+    --soft: #F1EDE7;
+    --accent: #2E2A26;
+    --danger: #9B3B2F;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Montserrat', sans-serif; font-size: 14px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 80px; }
+
+  /* Header */
+  header { text-align: center; padding: 48px 0 28px; border-bottom: 1px solid var(--line); }
+  .logo { font-family: 'Bodoni Moda', serif; font-size: 64px; font-weight: 400; letter-spacing: .02em; line-height: 1; }
+  .logo-sub { font-size: 10px; letter-spacing: .6em; margin-top: 6px; padding-left: .6em; }
+  .tagline { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 13px; letter-spacing: .3em;
+             text-transform: uppercase; color: var(--muted); margin-top: 22px; }
+
+  /* Steps */
+  .steps { display: flex; justify-content: space-between; margin: 28px 0 8px; gap: 8px; }
+  .steps div { flex: 1; text-align: center; font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+               color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .steps div.on { color: var(--ink); border-bottom: 2px solid var(--ink); }
+  .steps span { display: block; font-family: 'Jost', sans-serif; font-size: 18px; font-weight: 300; letter-spacing: .05em; }
+
+  h2 { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 26px; letter-spacing: .2em;
+       text-transform: uppercase; margin: 36px 0 6px; }
+  h3 { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 19px; letter-spacing: .18em;
+       text-transform: uppercase; margin: 28px 0 8px; color: var(--ink); }
+  .hint { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+  /* Services */
+  .svc { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%;
+         text-align: left; background: transparent; border: 0; border-bottom: 1px solid var(--line);
+         padding: 16px 12px; cursor: pointer; color: inherit; font: inherit; transition: background .15s; }
+  .svc:hover { background: var(--soft); }
+  .svc.sel { background: var(--ink); color: var(--bg); }
+  .svc.sel .svc-desc, .svc.sel .svc-dur { color: #CFC8BF; }
+  .svc-name { font-size: 15px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+  .svc-desc { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .svc-dur { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .svc-price { font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 300; white-space: nowrap; }
+
+  /* Calendar */
+  .cal { background: var(--card); border: 1px solid var(--line); padding: 20px; margin-top: 16px; }
+  .cal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .cal-head b { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 18px; letter-spacing: .2em; text-transform: uppercase; }
+  .nav { background: none; border: 1px solid var(--line); width: 36px; height: 36px; cursor: pointer; font-size: 16px; color: var(--ink); }
+  .nav:disabled { opacity: .3; cursor: default; }
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .dow { text-align: center; font-size: 10px; letter-spacing: .15em; color: var(--muted); padding: 6px 0; }
+  .day { aspect-ratio: 1; border: 1px solid transparent; background: none; font: inherit; font-size: 13px;
+         cursor: pointer; color: var(--ink); position: relative; }
+  .day:hover:not(:disabled) { border-color: var(--ink); }
+  .day:disabled { color: #C9C2B9; cursor: default; text-decoration: line-through; text-decoration-color: #DDD6CD; }
+  .day.avail::after { content: ''; position: absolute; bottom: 18%; left: 50%; width: 4px; height: 4px;
+                      margin-left: -2px; border-radius: 50%; background: var(--ink); }
+  .day.sel { background: var(--ink); color: var(--bg); }
+  .day.sel::after { background: var(--bg); }
+  .day.blank { visibility: hidden; }
+  .loading { text-align: center; padding: 12px; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+
+  .times { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; margin-top: 12px; }
+  .time { border: 1px solid var(--line); background: var(--card); padding: 11px 0; font: inherit; font-size: 13px;
+          letter-spacing: .08em; cursor: pointer; color: var(--ink); }
+  .time:hover { border-color: var(--ink); }
+  .time.sel { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .time small { display: block; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .time.sel small { color: #CFC8BF; }
+
+  /* Form */
+  label { display: block; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; margin: 18px 0 6px; }
+  input, textarea, select { width: 100%; border: 1px solid var(--line); background: var(--card); padding: 12px;
+           font: inherit; color: var(--ink); border-radius: 0; }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--ink); }
+  textarea { min-height: 80px; resize: vertical; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  .check { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; font-size: 12px; letter-spacing: 0;
+           text-transform: none; cursor: pointer; }
+  .check input { width: auto; margin-top: 3px; }
+
+  /* Summary + buttons */
+  .summary { background: var(--card); border: 1px solid var(--line); padding: 20px; margin-top: 28px; }
+  .summary div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; font-size: 13px; }
+  .summary div span:first-child { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+  .summary .total { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 12px; font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 300; }
+  .note { font-size: 11px; color: var(--muted); margin-top: 10px; }
+
+  .btn { display: block; width: 100%; margin-top: 24px; padding: 17px; background: var(--ink); color: var(--bg); border: 0;
+         font: inherit; font-size: 12px; letter-spacing: .3em; text-transform: uppercase; cursor: pointer; }
+  .btn:disabled { opacity: .35; cursor: default; }
+  .btn.ghost { background: none; color: var(--ink); border: 1px solid var(--ink); }
+  .error { color: var(--danger); font-size: 12px; margin-top: 12px; min-height: 1em; }
+
+  /* Info */
+  .info { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); text-align: center; }
+  .info h4 { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 16px; letter-spacing: .25em; margin-bottom: 12px; }
+  .info li { list-style: none; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; line-height: 2; }
+  .contact { display: flex; border: 1px solid var(--ink); margin-top: 24px; }
+  .contact a, .contact p { flex: 1; padding: 16px; text-align: center; }
+  .contact a { font-family: 'Jost', sans-serif; font-size: 20px; font-weight: 300; color: var(--ink); text-decoration: none; border-right: 1px solid var(--ink); }
+  .contact p { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; justify-content: center; }
+
+  .done { text-align: center; padding: 40px 0; }
+  .done .tick { font-family: 'Bodoni Moda', serif; font-size: 44px; }
+  .done p { margin-top: 10px; color: var(--muted); }
+  .demo { background: var(--soft); text-align: center; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; padding: 8px 16px; color: var(--muted); }
+  .hidden { display: none !important; }
+
+  @media (max-width: 560px) {
+    .logo { font-size: 48px; }
+    h2 { font-size: 21px; }
+    .row { grid-template-columns: 1fr; }
+    .steps div { font-size: 8px; letter-spacing: .1em; }
+    .contact { flex-direction: column; }
+    .contact a { border-right: 0; border-bottom: 1px solid var(--ink); }
+    .cal { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+<div id="demoBar" class="demo hidden">Preview mode &#x2014; sample availability, no real bookings are made</div>
+<div class="wrap">
+  <header>
+    <div class="logo">MSK</div>
+    <div class="logo-sub">STUDIOS</div>
+    <div class="tagline">Hair &amp; Makeup &#xb7; Bridal &amp; Events &#xb7; Nottingham</div>
+  </header>
+
+  <div class="steps" id="steps">
+    <div class="on"><span>01</span>Service</div>
+    <div><span>02</span>Date &amp; Time</div>
+    <div><span>03</span>Details</div>
+    <div><span>04</span>Confirm</div>
+  </div>
+
+  <!-- STEP 1: service -->
+  <section id="s1">
+    <h2>Choose a service</h2>
+    <p class="hint">All prices per request</p>
+    <div id="services"></div>
+    <button class="btn" id="to2" disabled>Continue</button>
+  </section>
+
+  <!-- STEP 2: date & time -->
+  <section id="s2" class="hidden">
+    <h2>Date &amp; time</h2>
+    <p class="hint" id="s2hint"></p>
+    <div class="cal">
+      <div class="cal-head">
+        <button class="nav" id="prev" aria-label="Previous month">&#x2039;</button>
+        <b id="monthLabel"></b>
+        <button class="nav" id="next" aria-label="Next month">&#x203a;</button>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="loading hidden" id="calLoading">Checking availability&#x2026;</div>
+    </div>
+    <div id="timesWrap" class="hidden">
+      <h3 id="dayLabel"></h3>
+      <p class="hint">Start time &#xb7; the artist will arrive at this time</p>
+      <div class="times" id="times"></div>
+    </div>
+    <button class="btn" id="to3" disabled>Continue</button>
+    <button class="btn ghost" data-back="1">Back</button>
+  </section>
+
+  <!-- STEP 3: details -->
+  <section id="s3" class="hidden">
+    <h2>Your details</h2>
+    <form id="form" novalidate>
+      <label for="name">Full name</label>
+      <input id="name" autocomplete="name" required>
+      <div class="row">
+        <div><label for="email">Email</label><input id="email" type="email" autocomplete="email" required></div>
+        <div><label for="phone">Mobile number</label><input id="phone" type="tel" autocomplete="tel" required></div>
+      </div>
+      <label for="address">Where should the artist come to?</label>
+      <input id="address" placeholder="Full address and postcode" autocomplete="street-address" required>
+      <div class="row">
+        <div><label for="weddingDate">Wedding / event date (if different)</label><input id="weddingDate" type="date"></div>
+        <div><label for="people">Number of people</label>
+          <select id="people"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option></select></div>
+      </div>
+      <label for="notes">Anything she should know?</label>
+      <textarea id="notes" placeholder="The look you're going for, skin concerns, parking, inspiration links&#x2026;"></textarea>
+      <label class="check"><input type="checkbox" id="agree"> I have read the important information below, including that travel is charged at &#xa3;10 per hour and touch-ups are not included unless part of a package or booked in advance.</label>
+    </form>
+    <div class="error" id="formErr"></div>
+    <button class="btn" id="to4">Review booking</button>
+    <button class="btn ghost" data-back="2">Back</button>
+  </section>
+
+  <!-- STEP 4: confirm -->
+  <section id="s4" class="hidden">
+    <h2>Confirm</h2>
+    <div class="summary" id="summary"></div>
+    <p class="note">Travel is charged at &#xa3;10 per hour from when the artist leaves to when she arrives, and is added to your final total. Bookings before 6:00am include an early fee. You'll receive a confirmation email and calendar invite.</p>
+    <div class="error" id="bookErr"></div>
+    <button class="btn" id="book">Confirm booking</button>
+    <button class="btn ghost" data-back="3">Back</button>
+  </section>
+
+  <!-- DONE -->
+  <section id="s5" class="hidden">
+    <div class="done">
+      <div class="tick">Thank you</div>
+      <h3>Your booking is confirmed</h3>
+      <p id="doneText"></p>
+    </div>
+  </section>
+
+  <div class="info">
+    <h4>IMPORTANT INFORMATION</h4>
+    <ul>
+      <li>All rates may vary depending on distance and booking duration</li>
+      <li>Additional services can be requested upon enquiry</li>
+      <li>Early bookings before 6:00am will include an additional fee</li>
+      <li>A suitable space with good lighting and access to a power outlet must be provided</li>
+      <li>Clients should arrive with a clean, moisturised face unless advised otherwise</li>
+      <li>Touch-ups are not included unless part of a package or booked in advance</li>
+      <li>Any time outside the agreed booking is charged at the standard hourly rate</li>
+      <li>A bridal trial is recommended before the wedding day</li>
+    </ul>
+    <div class="contact">
+      <a id="phoneLink" href="tel:07808291908">07808291908</a>
+      <p>Please feel free to reach out for services not stated on the price list</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// Only used when this page is opened on its own (preview). When deployed with
+// Google Apps Script, services and availability come from Code.gs instead.
+var DEMO_SETUP = {
+  phone: '07808291908',
+  maxDaysAhead: 548,
+  services: [
+    { id: 'bridal-makeup', category: 'Bridal Services', name: 'Bridal Makeup (Wedding Day)', desc: 'Makeup alone, excluding any touch-ups', price: 90, minutes: 90 },
+    { id: 'half-day', category: 'Bridal Services', name: 'Half Day Booking (4 Hours)', desc: 'Includes bridal makeup + up to 4 hours artist presence', price: 150, minutes: 240 },
+    { id: 'full-day', category: 'Bridal Services', name: 'Full Day Booking (8 Hours)', desc: 'Includes bridal makeup + up to 8 hours artist presence', price: 210, minutes: 480 },
+    { id: 'trial', category: 'Bridal Services', name: 'Bridal Trial', desc: 'Highly recommended to perfect your desired look prior to your wedding day', price: 65, minutes: 90 },
+    { id: 'mothers', category: 'Bridal Party', name: 'Mother of the Bride / Groom', desc: 'Exclusive to just the two mothers', price: 155, minutes: 120 },
+    { id: 'bridesmaids', category: 'Bridal Party', name: 'Bridesmaids', desc: 'For up to three bridesmaids maximum', price: 225, minutes: 150 },
+    { id: 'package-1', category: 'Ultimate Bridal Packages', name: 'Package 1', desc: 'Trial + wedding day makeup + up to 4 hours touch-ups + 2 bridesmaids', price: 290, minutes: 360 },
+    { id: 'package-2', category: 'Ultimate Bridal Packages', name: 'Package 2', desc: 'Trial + wedding day makeup + up to 8 hours touch-ups + 2 bridesmaids', price: 340, minutes: 600 }
+  ]
+};
+
+// The Apps Script /exec link. Used when this page is hosted on a normal website, so
+// customers never hit Google's "unable to open the file" multi-account error.
+var API_URL = 'https://script.google.com/macros/s/AKfycbyBXAJSPWkP9fDQtLGUEEu_Iv3iaFrFuH2nO-85-LV-dt2pbsVVcjT6BljII3JlG-ZDGg/exec';
+var GAS = typeof google !== 'undefined' && google.script && google.script.run;
+var HOSTED = !GAS && /^https:/.test(location.protocol) && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+var LIVE = GAS || HOSTED;
+var setup, service, monthCache = {}, view, selDate, selTime;
+var $ = function (id) { return document.getElementById(id); };
+var pad = function (n) { return String(n).padStart(2, '0'); };
+var ymd = function (d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function call(fn, args) {
+  return new Promise(function (resolve, reject) {
+    if (!LIVE) return resolve(demo[fn].apply(null, args));
+    if (HOSTED) {
+      // credentials: 'omit' keeps the visitor's Google login out of it entirely.
+      var req = fn === 'book'
+        ? fetch(API_URL, { method: 'POST', credentials: 'omit', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(args[0]) })
+        : fetch(API_URL + '?fn=' + fn + (fn === 'getMonth' ? '&serviceId=' + encodeURIComponent(args[0]) + '&ym=' + encodeURIComponent(args[1]) : ''), { credentials: 'omit' });
+      return req.then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(resolve, reject);
+    }
+    google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[fn].apply(null, args);
+  });
+}
+
+// Fake backend for preview: random-ish free slots, weekends busier.
+var demo = {
+  getSetup: function () { return DEMO_SETUP; },
+  getMonth: function (serviceId, ym) {
+    var s = DEMO_SETUP.services.find(function (x) { return x.id === serviceId; });
+    var p = ym.split('-').map(Number), out = {}, now = new Date();
+    var days = new Date(p[0], p[1], 0).getDate();
+    for (var d = 1; d <= days; d++) {
+      var date = new Date(p[0], p[1] - 1, d);
+      if (date - now < 2 * 864e5) continue;
+      var seed = (d * 7 + p[1] * 13) % 10;
+      if (seed === 0) continue; // fully booked
+      var slots = [];
+      for (var m = 5 * 60; m + s.minutes <= 21 * 60; m += 30) {
+        if ((m / 30 + seed) % 4 === 0) continue; // already booked
+        slots.push(pad(Math.floor(m / 60)) + ':' + pad(m % 60));
+      }
+      out[ymd(date)] = slots;
+    }
+    return out;
+  },
+  book: function (b) { return { ok: true, ref: 'MSK-DEMO' }; }
+};
+
+function money(n) { return '£' + n; }
+function duration(min) {
+  var h = Math.floor(min / 60), m = min % 60;
+  return (h ? h + (h === 1 ? ' hour' : ' hours') : '') + (m ? ' ' + m + ' min' : '');
+}
+function endTime(t, min) {
+  var p = t.split(':').map(Number), e = p[0] * 60 + p[1] + min;
+  return pad(Math.floor(e / 60) % 24) + ':' + pad(e % 60);
+}
+function prettyDate(s) {
+  var p = s.split('-').map(Number), d = new Date(p[0], p[1] - 1, p[2]);
+  return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function go(n) {
+  for (var i = 1; i <= 5; i++) $('s' + i).classList.toggle('hidden', i !== n);
+  [].forEach.call($('steps').children, function (el, i) { el.classList.toggle('on', i === Math.min(n, 4) - 1); });
+  $('steps').classList.toggle('hidden', n === 5);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('[data-back]').forEach(function (b) {
+  b.onclick = function () { go(+b.dataset.back); };
+});
+
+// Step 1
+function renderServices() {
+  var html = '', cat = '';
+  setup.services.forEach(function (s) {
+    if (s.category !== cat) { cat = s.category; html += '<h3>' + cat + '</h3>'; }
+    html += '<button class="svc" data-id="' + s.id + '"><div><div class="svc-name">' + s.name + '</div>' +
+      '<div class="svc-desc">' + s.desc + '</div><div class="svc-dur">Approx. ' + duration(s.minutes) + '</div></div>' +
+      '<div class="svc-price">' + money(s.price) + '</div></button>';
+  });
+  $('services').innerHTML = html;
+  document.querySelectorAll('.svc').forEach(function (b) {
+    b.onclick = function () {
+      document.querySelectorAll('.svc').forEach(function (x) { x.classList.remove('sel'); });
+      b.classList.add('sel');
+      service = setup.services.find(function (s) { return s.id === b.dataset.id; });
+      $('to2').disabled = false;
+    };
+  });
+}
+$('to2').onclick = function () {
+  monthCache = {}; selDate = selTime = null;
+  $('timesWrap').classList.add('hidden'); $('to3').disabled = true;
+  var now = new Date(); view = new Date(now.getFullYear(), now.getMonth(), 1);
+  $('s2hint').textContent = service.name + ' · ' + duration(service.minutes) + ' · ' + money(service.price);
+  go(2); renderMonth();
+};
+
+// Step 2
+function monthKey(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1); }
+function renderMonth() {
+  var key = monthKey(view), now = new Date();
+  var max = new Date(); max.setDate(max.getDate() + setup.maxDaysAhead);
+  $('monthLabel').textContent = MONTHS[view.getMonth()] + ' ' + view.getFullYear();
+  $('prev').disabled = view <= new Date(now.getFullYear(), now.getMonth(), 1);
+  $('next').disabled = new Date(view.getFullYear(), view.getMonth() + 1, 1) > max;
+
+  var days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+  var lead = (new Date(view.getFullYear(), view.getMonth(), 1).getDay() + 6) % 7; // Monday first
+  var avail = monthCache[key];
+  var html = ['M','T','W','T','F','S','S'].map(function (d) { return '<div class="dow">' + d + '</div>'; }).join('');
+  for (var i = 0; i < lead; i++) html += '<button class="day blank" disabled></button>';
+  for (var d = 1; d <= days; d++) {
+    var k = key + '-' + pad(d), ok = avail && avail[k] && avail[k].length;
+    html += '<button class="day' + (ok ? ' avail' : '') + (k === selDate ? ' sel' : '') + '" data-d="' + k + '"' + (ok ? '' : ' disabled') + '>' + d + '</button>';
+  }
+  $('grid').innerHTML = html;
+  document.querySelectorAll('.day[data-d]').forEach(function (b) {
+    b.onclick = function () { selDate = b.dataset.d; selTime = null; $('to3').disabled = true; renderMonth(); renderTimes(); };
+  });
+
+  if (!avail) {
+    $('calLoading').classList.remove('hidden');
+    call('getMonth', [service.id, key]).then(function (res) {
+      monthCache[key] = res; $('calLoading').classList.add('hidden');
+      if (monthKey(view) === key) renderMonth();
+    }).catch(function () { $('calLoading').textContent = 'Could not load availability — please refresh.'; });
+  }
+}
+$('prev').onclick = function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderMonth(); };
+$('next').onclick = function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderMonth(); };
+
+function renderTimes() {
+  var slots = monthCache[selDate.slice(0, 7)][selDate] || [];
+  $('dayLabel').textContent = prettyDate(selDate);
+  $('times').innerHTML = slots.map(function (t) {
+    var early = +t.slice(0, 2) < 6;
+    return '<button class="time' + (t === selTime ? ' sel' : '') + '" data-t="' + t + '">' + t +
+      (early ? '<small>Early fee</small>' : '') + '</button>';
+  }).join('');
+  $('timesWrap').classList.remove('hidden');
+  document.querySelectorAll('.time').forEach(function (b) {
+    b.onclick = function () { selTime = b.dataset.t; $('to3').disabled = false; renderTimes(); };
+  });
+}
+$('to3').onclick = function () { go(3); };
+
+// Step 3
+function details() {
+  return {
+    serviceId: service.id, date: selDate, time: selTime,
+    name: $('name').value.trim(), email: $('email').value.trim(), phone: $('phone').value.trim(),
+    address: $('address').value.trim(), weddingDate: $('weddingDate').value,
+    people: $('people').value, notes: $('notes').value.trim()
+  };
+}
+$('to4').onclick = function () {
+  var b = details(), err = '';
+  if (!b.name || !b.phone || !b.address) err = 'Please fill in your name, mobile number and address.';
+  else if (!/^\S+@\S+\.\S+$/.test(b.email)) err = 'Please enter a valid email address.';
+  else if (!$('agree').checked) err = 'Please confirm you have read the important information.';
+  $('formErr').textContent = err;
+  if (err) return;
+  var early = +selTime.slice(0, 2) < 6;
+  var rows = [
+    ['Service', service.name], ['Date', prettyDate(selDate)],
+    ['Time', selTime + ' – ' + endTime(selTime, service.minutes)], ['Location', b.address],
+    ['Name', b.name], ['Contact', b.phone + ' · ' + b.email]
+  ];
+  if (early) rows.push(['Early start', 'Additional fee applies']);
+  $('summary').innerHTML = rows.map(function (r) {
+    return '<div><span>' + r[0] + '</span><span>' + esc(r[1]) + '</span></div>';
+  }).join('') + '<div class="total"><span>Service total</span><span>' + money(service.price) + ' + travel</span></div>';
+  $('bookErr').textContent = '';
+  go(4);
+};
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+// Step 4
+$('book').onclick = function () {
+  var btn = $('book'); btn.disabled = true; btn.textContent = 'Booking…';
+  call('book', [details()]).then(function (res) {
+    btn.disabled = false; btn.textContent = 'Confirm booking';
+    if (!res.ok) {
+      if (res.taken) { // someone else got there first: reload availability and pick again
+        delete monthCache[selDate.slice(0, 7)];
+        selTime = null; $('to3').disabled = true; $('timesWrap').classList.add('hidden');
+        go(2); renderMonth();
+        $('s2hint').textContent = res.error;
+        return;
+      }
+      $('bookErr').textContent = res.error;
+      return;
+    }
+    $('doneText').innerHTML = esc(service.name) + '<br>' + esc(prettyDate(selDate)) + ' at ' + selTime +
+      '<br><br>A confirmation has been sent to ' + esc($('email').value) + '.<br>Reference: ' + esc(res.ref);
+    go(5);
+  }).catch(function () {
+    btn.disabled = false; btn.textContent = 'Confirm booking';
+    $('bookErr').textContent = 'Something went wrong. Please try again or call ' + setup.phone + '.';
+  });
+};
+
+// Start
+if (!LIVE) $('demoBar').classList.remove('hidden');
+call('getSetup', []).then(function (s) {
+  setup = s;
+  $('phoneLink').textContent = s.phone; $('phoneLink').href = 'tel:' + s.phone.replace(/\s/g, '');
+  renderServices();
+});
+</script>
+</body>
+</html>
